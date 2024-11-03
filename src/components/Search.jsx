@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import useCustomers from "../hooks/Store";
-import { Link } from "react-router-dom";
 import Button from "./Buttons";
+import { useCustomerStore } from "../hooks/Store";
 
 function Search() {
   const customers = useCustomers((state) => state.allCustomers);
   const getAllCustomers = useCustomers((state) => state.getAllCustomers);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
+  const saveCustomer = useCustomerStore((state) => state.saveCustomer);
+
 
   useEffect(() => {
     searchTerm.length > 0 && getAllCustomers(searchTerm);
   }, [getAllCustomers, searchTerm]);
+
 
   useEffect(() => {
     if (searchTerm.trim()) {
@@ -26,6 +29,10 @@ function Search() {
       setFilteredCustomers([]);
     }
   }, [searchTerm, customers]);
+
+  const handleSave = (customer) => {
+    saveCustomer(customer);
+  };
 
   return (
     <div>
@@ -51,7 +58,7 @@ function Search() {
                 >
                   <div>{customer.navn}</div>
                   <div>
-                    <Button text="Lagre" />
+                    <Button text="Lagre" onClick={() => handleSave(customer)}/>
                   </div>
                 </li>
               ))

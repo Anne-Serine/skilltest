@@ -1,12 +1,12 @@
-function Button({ icon, text, type, id, onClick }) {
+function Button({ icon, text, id, onClick }) {
   const primary = "bg-app-primary py-1 px-2 text-white";
 
   return (
     <button
       value={id}
-      onClick={(e) => onClick(e.target.value)}
       className={primary}
       id={id}
+      onClick={(e) => onClick(e.target.value)}
     >
       {icon}
       {text}

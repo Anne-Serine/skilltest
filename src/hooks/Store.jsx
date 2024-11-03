@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 const useCustomers = create((set) => ({
   allCustomers: [],
@@ -31,3 +32,27 @@ const useCustomers = create((set) => ({
 }));
 
 export default useCustomers;
+
+// Save data in localStorage
+export const useCustomerStore = create(
+  persist(
+    (set) => ({
+      savedCustomers: [],
+
+      saveCustomer: (customer) =>
+        set((state) => {
+          if (!customer || !customer.navn || !customer.organisasjonsnummer) {
+            console.warn("invalid customer object", customer);
+            return state;
+          }
+          return {
+            savedCustomers: [...state.savedCustomers, customer],
+          };
+        }),
+    }),
+    {
+      name: "saved-customers",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+)
