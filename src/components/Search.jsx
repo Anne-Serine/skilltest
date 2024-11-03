@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useCustomers from "../hooks/Store";
 import { Link } from "react-router-dom";
+import Button from "./Buttons";
 
 function Search() {
   const customers = useCustomers((state) => state.allCustomers);
@@ -40,19 +41,25 @@ function Search() {
         />
       </div>
       {searchTerm && (
-        <ul>
-          {filteredCustomers.length ? (
-            filteredCustomers.map((customer) => (
-              <li key={customer.organisasjonsnummer}>
-                <Link to="#">
-                {customer.navn}
-                </Link>
-              </li>
-            ))
-          ) : (
-            <li className="font-medium">Ingen resultat...</li>
-          )}
-        </ul>
+        <div className="bg-app-secondary mt-5 p-2 rounded-sm">
+          <ul className="rounded-sm">
+            {filteredCustomers.length ? (
+              filteredCustomers.map((customer) => (
+                <li
+                  key={customer.organisasjonsnummer}
+                  className="bg-white p-2 border rounded-sm flex justify-between items-center"
+                >
+                  <div>{customer.navn}</div>
+                  <div>
+                    <Button text="Lagre" />
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="font-medium">Ingen resultat...</li>
+            )}
+          </ul>
+        </div>
       )}
     </div>
   );
