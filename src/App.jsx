@@ -1,3 +1,4 @@
+import CustomerList from "./components/CustomerList";
 import Search from "./components/Search";
 import "./styles/index.css";
 
@@ -16,9 +17,10 @@ function App() {
           </p>
           <Search />
         </section>
-        <aside className="bg-app-secondary h-[100vh] p-5 md:col-span-3">
+        <aside className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
           <h2 className="pb-3">Min kundeliste</h2>
           <p className="pb-3 max-w-[30rem]">Her finner du en oversikt over dine lagrede kunder. Du kan legge til notater, slette kunder eller få mer informasjon om en kunde ved å bruke knappene til høyre.</p>
+          <CustomerList />
         </aside>
       </div>
     </div>

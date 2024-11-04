@@ -9,6 +9,8 @@ function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const saveCustomer = useCustomerStore((state) => state.saveCustomer);
+  const savedCustomers = useCustomerStore((state) => state.savedCustomers);
+  const [message, setMessage] = useState("");
 
 
   useEffect(() => {
@@ -31,42 +33,56 @@ function Search() {
   }, [searchTerm, customers]);
 
   const handleSave = (customer) => {
-    saveCustomer(customer);
+    const isAlreadySaved = savedCustomers.some(
+      (savedCustomer) => savedCustomer.organisasjonsnummer === customer.organisasjonsnummer
+    );
+    if (isAlreadySaved) {
+      setMessage(`${customer.navn} er allerede lagret.`);
+    } else {
+      saveCustomer(customer)
+      setMessage(`${customer.navn} ble lagt til.`)
+    }
+    setTimeout(() => setMessage(""), 3000);
   };
 
   return (
     <div>
-      <div>
-        <input
-          type="search"
-          placeholder="f.eks Appex / 995412020"
-          id="searchInput"
-          aria-label="search input"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none"
-        />
-      </div>
+      <input
+        type="search"
+        placeholder="f.eks Appex / 995412020"
+        id="searchInput"
+        aria-label="search input"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none"
+      />
       {searchTerm && (
-        <div className="bg-app-secondary mt-5 p-2 rounded-sm">
-          <ul className="rounded-sm">
-            {filteredCustomers.length ? (
-              filteredCustomers.map((customer) => (
-                <li
-                  key={customer.organisasjonsnummer}
-                  className="bg-white p-2 border rounded-sm flex justify-between items-center"
-                >
-                  <div>{customer.navn}</div>
-                  <div>
-                    <Button text="Lagre" onClick={() => handleSave(customer)}/>
-                  </div>
-                </li>
-              ))
-            ) : (
-              <li className="font-medium">Ingen resultat...</li>
-            )}
-          </ul>
-        </div>
+        <>
+          {message.length > 0 && 
+            <div className="bg-green-50 my-2 text-sm rounded-sm p-2" role="alert">
+              {message}
+            </div>
+          }
+          <div className="bg-app-secondary mt-5 p-2 rounded-sm">
+            <ul className="rounded-sm">
+              {filteredCustomers.length ? (
+                filteredCustomers.map((customer) => (
+                  <li
+                    key={customer.organisasjonsnummer}
+                    className="bg-white p-2 border rounded-sm "
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="text-sm">{customer.navn}</div>
+                      <Button text="Lagre" onClick={() => handleSave(customer)}/>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li className="font-medium">Ingen resultat...</li>
+              )}
+            </ul>
+          </div>
+        </>
       )}
     </div>
   );

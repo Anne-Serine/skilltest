@@ -19,8 +19,27 @@ const useCustomers = create((set) => ({
         const data = await response.json();
 
         if (data._embedded && data._embedded.enheter) {
-          set({ allCustomers: data._embedded.enheter });
-          console.log(data._embedded.enheter.map((customer) => customer.navn));
+          const customers = data._embedded.enheter.map(
+            ({
+              navn,
+              organisasjonsnummer,
+              hjemmeside,
+              postadresse,
+              stiftelsesdato,
+              epostadresse,
+              mobil
+            }) => ({
+              navn,
+              organisasjonsnummer,
+              hjemmeside,
+              postadresse,
+              stiftelsesdato,
+              epostadresse,
+              mobil
+            })
+          )
+          set({ allCustomers: customers });
+          console.log(customers);
         } else {
           console.error("Unexpected response structure:", data);
         }
@@ -45,14 +64,30 @@ export const useCustomerStore = create(
             console.warn("invalid customer object", customer);
             return state;
           }
-          return {
-            savedCustomers: [...state.savedCustomers, customer],
-          };
+            return {
+              savedCustomers: [...state.savedCustomers, customer],
+            };
         }),
+
+      addNote: (organisasjonsnummer, note) =>
+        set((state) => ({
+          savedCustomers: state.savedCustomers.map((customer) =>
+            customer.organisasjonsnummer === organisasjonsnummer
+              ? { ...customer, note }
+              : customer
+          ),
+        })),
+
+      removeCustomer: (organisasjonsnummer) =>
+        set((state) => ({
+          savedCustomers: state.savedCustomers.filter(
+            (customer) => customer.organisasjonsnummer !== organisasjonsnummer
+          ),
+        })),
     }),
     {
       name: "saved-customers",
       storage: createJSONStorage(() => localStorage),
     }
   )
-)
+);
