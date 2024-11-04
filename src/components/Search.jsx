@@ -72,7 +72,7 @@ function Search() {
                     className="bg-white p-2 border rounded-sm "
                   >
                     <div className="flex justify-between items-center">
-                      <div className="text-sm">{customer.navn}</div>
+                      <div className="text-sm truncate max-w-[70%]" title={customer.navn}>{customer.navn}</div>
                       <Button text="Lagre" onClick={() => handleSave(customer)}/>
                     </div>
                   </li>

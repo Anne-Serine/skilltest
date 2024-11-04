@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <div className="bg-app-header p-3">
-        <h1 className="container px-3 text-white">Kunderegister</h1>
+        <h1 className="container xl:px-3 text-white">Kunderegister</h1>
       </div>
       <div className="container gap-5 px-3 grid grid-cols-1 md:grid-cols-5 ">
         <section className="py-5 md:col-span-2">
@@ -19,7 +19,7 @@ function App() {
         </section>
         <aside className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
           <h2 className="pb-3">Min kundeliste</h2>
-          <p className="pb-3 max-w-[30rem]">Her finner du en oversikt over dine lagrede kunder. Du kan legge til notater, slette kunder eller få mer informasjon om en kunde ved å bruke knappene til høyre.</p>
+          <p className="pb-3 max-w-[30rem]">Her finner du en oversikt over dine lagrede kunder. Du kan legge til notater, slette kunder eller få mer informasjon om en kunde ved å bruke knappene.</p>
           <CustomerList />
         </aside>
       </div>

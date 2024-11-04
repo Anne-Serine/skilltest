@@ -1,5 +1,5 @@
 function Button({ icon, text, id, onClick }) {
-  const primary = "bg-app-primary py-1 px-2 text-white rounded-sm ";
+  const primary = "bg-app-primary py-1 px-2 text-white rounded-sm";
 
   return (
     <button
