@@ -9,6 +9,9 @@ export default  {
       container: {
         center: true
       },
+      borderRadius: {
+        "sm": "4px"
+      },
       colors: {
         "app-bg": "#f8f8f8",
         "app-header": "#2f4a52",
