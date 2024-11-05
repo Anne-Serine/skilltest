@@ -27,7 +27,7 @@ const useCustomers = create((set) => ({
               postadresse,
               stiftelsesdato,
               epostadresse,
-              mobil
+              mobil,
             }) => ({
               navn,
               organisasjonsnummer,
@@ -35,13 +35,10 @@ const useCustomers = create((set) => ({
               postadresse,
               stiftelsesdato,
               epostadresse,
-              mobil
+              mobil,
             })
-          )
+          );
           set({ allCustomers: customers });
-          console.log(customers);
-        } else {
-          console.error("Unexpected response structure:", data);
         }
       }
     } catch (error) {
@@ -64,9 +61,9 @@ export const useCustomerStore = create(
             console.warn("invalid customer object", customer);
             return state;
           }
-            return {
-              savedCustomers: [...state.savedCustomers, customer],
-            };
+          return {
+            savedCustomers: [...state.savedCustomers, customer],
+          };
         }),
 
       addNote: (organisasjonsnummer, note) =>

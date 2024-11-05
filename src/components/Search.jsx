@@ -12,11 +12,9 @@ function Search() {
   const savedCustomers = useCustomerStore((state) => state.savedCustomers);
   const [message, setMessage] = useState("");
 
-
   useEffect(() => {
     searchTerm.length > 0 && getAllCustomers(searchTerm);
   }, [getAllCustomers, searchTerm]);
-
 
   useEffect(() => {
     if (searchTerm.trim()) {
@@ -34,15 +32,21 @@ function Search() {
 
   const handleSave = (customer) => {
     const isAlreadySaved = savedCustomers.some(
-      (savedCustomer) => savedCustomer.organisasjonsnummer === customer.organisasjonsnummer
+      (savedCustomer) =>
+        savedCustomer.organisasjonsnummer === customer.organisasjonsnummer
     );
     if (isAlreadySaved) {
-      setMessage(`${customer.navn} er allerede lagret.`);
+      setMessage(`${customer.navn} er allerede lagt til.`);
     } else {
-      saveCustomer(customer)
-      setMessage(`${customer.navn} ble lagt til.`)
+      saveCustomer(customer);
+      setMessage(`${customer.navn} ble lagt til.`);
     }
-    setTimeout(() => setMessage(""), 3000);
+    setSearchTerm("");
+    setFilteredCustomers([]);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   return (
@@ -56,33 +60,39 @@ function Search() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none"
       />
+      {message && (
+        <div className="bg-green-50 my-2 text-sm rounded-sm p-2" role="alert">
+          {message}
+        </div>
+      )}
       {searchTerm && (
-        <>
-          {message.length > 0 && 
-            <div className="bg-green-50 my-2 text-sm rounded-sm p-2" role="alert">
-              {message}
-            </div>
-          }
-          <div className="bg-app-secondary mt-5 p-2 rounded-sm">
-            <ul className="rounded-sm">
-              {filteredCustomers.length ? (
-                filteredCustomers.map((customer) => (
-                  <li
-                    key={customer.organisasjonsnummer}
-                    className="bg-white p-2 border rounded-sm "
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="text-sm truncate max-w-[70%]" title={customer.navn}>{customer.navn}</div>
-                      <Button text="Lagre" onClick={() => handleSave(customer)}/>
+        <div className="bg-app-secondary mt-5 p-2 rounded-sm">
+          <ul className="rounded-sm">
+            {filteredCustomers.length ? (
+              filteredCustomers.map((customer) => (
+                <li
+                  key={customer.organisasjonsnummer}
+                  className="bg-white p-2 border rounded-sm "
+                >
+                  <div className="flex justify-between items-center">
+                    <div
+                      className="text-sm truncate max-w-[70%]"
+                      title={customer.navn}
+                    >
+                      {customer.navn}
                     </div>
-                  </li>
-                ))
-              ) : (
-                <li className="font-medium">Ingen resultat...</li>
-              )}
-            </ul>
-          </div>
-        </>
+                    <Button
+                      text="Legg til"
+                      onClick={() => handleSave(customer)}
+                    />
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="font-medium">Ingen resultat...</li>
+            )}
+          </ul>
+        </div>
       )}
     </div>
   );

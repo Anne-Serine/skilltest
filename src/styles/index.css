@@ -21,3 +21,6 @@
   @apply max-w-[1200px];
 }
 
+dialog::backdrop {
+  @apply bg-black opacity-70;
+}
