@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 const useCustomers = create((set) => ({
   allCustomers: [],
@@ -18,10 +19,26 @@ const useCustomers = create((set) => ({
         const data = await response.json();
 
         if (data._embedded && data._embedded.enheter) {
-          set({ allCustomers: data._embedded.enheter });
-          console.log(data._embedded.enheter.map((customer) => customer.navn));
-        } else {
-          console.error("Unexpected response structure:", data);
+          const customers = data._embedded.enheter.map(
+            ({
+              navn,
+              organisasjonsnummer,
+              hjemmeside,
+              postadresse,
+              stiftelsesdato,
+              epostadresse,
+              mobil,
+            }) => ({
+              navn,
+              organisasjonsnummer,
+              hjemmeside,
+              postadresse,
+              stiftelsesdato,
+              epostadresse,
+              mobil,
+            })
+          );
+          set({ allCustomers: customers });
         }
       }
     } catch (error) {
@@ -31,3 +48,43 @@ const useCustomers = create((set) => ({
 }));
 
 export default useCustomers;
+
+// Save data in localStorage
+export const useCustomerStore = create(
+  persist(
+    (set) => ({
+      savedCustomers: [],
+
+      saveCustomer: (customer) =>
+        set((state) => {
+          if (!customer || !customer.navn || !customer.organisasjonsnummer) {
+            console.warn("invalid customer object", customer);
+            return state;
+          }
+          return {
+            savedCustomers: [...state.savedCustomers, customer],
+          };
+        }),
+
+      addNote: (organisasjonsnummer, note) =>
+        set((state) => ({
+          savedCustomers: state.savedCustomers.map((customer) =>
+            customer.organisasjonsnummer === organisasjonsnummer
+              ? { ...customer, note }
+              : customer
+          ),
+        })),
+
+      removeCustomer: (organisasjonsnummer) =>
+        set((state) => ({
+          savedCustomers: state.savedCustomers.filter(
+            (customer) => customer.organisasjonsnummer !== organisasjonsnummer
+          ),
+        })),
+    }),
+    {
+      name: "saved-customers",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
