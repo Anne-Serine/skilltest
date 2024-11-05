@@ -19,7 +19,11 @@ function App() {
         </section>
         <aside className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
           <h2 className="pb-3">Min kundeliste</h2>
-          <p className="pb-5">Her finner du en oversikt over dine lagrede kunder. Du kan legge til notater, slette kunder eller få mer informasjon om en kunde ved å bruke knappene.</p>
+          <p className="pb-5">
+            Her finner du en oversikt over dine lagrede kunder. Du kan legge til
+            notater, slette kunder eller få mer informasjon om en kunde ved å
+            bruke knappene.
+          </p>
           <CustomerList />
         </aside>
       </div>
