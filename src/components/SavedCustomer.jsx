@@ -37,7 +37,7 @@ function SavedCustomer({ customer, openModal }) {
   return (
     <>
       <div className="flex flex-wrap sm:flex-nowrap justify-between w-full">
-        <div className="bg-white min-w-[15rem]  w-full border p-2 overflow-hidden break-words">
+        <div className="bg-white min-w-[15rem] w-full border rounded-t-sm sm:rounded-none sm:rounded-s-sm p-2 overflow-hidden break-words">
           <div className="font-semibold">{customer.navn}</div>
           <div className="text-sm">
             {`org.nr: ${customer.organisasjonsnummer}`}

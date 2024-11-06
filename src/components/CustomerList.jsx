@@ -43,7 +43,7 @@ function CustomerList() {
             {savedCustomers.map((customer) => (
               <li
                 key={customer.organisasjonsnummer}
-                className="overflow-hidden rounded-sm mb-2"
+                className="overflow-hidden mb-2"
               >
                 <SavedCustomer customer={customer} openModal={openModal} />
               </li>
