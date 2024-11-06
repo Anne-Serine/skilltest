@@ -24,3 +24,7 @@
 dialog::backdrop {
   @apply bg-black opacity-70;
 }
+
+.error-message {
+  @apply p-2 bg-white text-app-warn border border-app-warn my-5;
+}

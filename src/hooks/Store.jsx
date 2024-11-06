@@ -3,6 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 const useCustomers = create((set) => ({
   allCustomers: [],
+  error: null,
   getAllCustomers: async (searchTerm) => {
     try {
       const isNumeric = Number(searchTerm);
@@ -14,6 +15,11 @@ const useCustomers = create((set) => ({
             : "organisasjonsnummer=" + searchTerm
         }`
       );
+
+      if (response.status === 404) throw new Error("404, Kunde ikke funnet");
+      if (response.status === 500) throw new Error("500, Intern serverfeil");
+
+      if (!response.ok) throw new Error(`Feil ${response.status}: Noe gikk galt`)
 
       if (response.status === 200) {
         const data = await response.json();
@@ -38,11 +44,14 @@ const useCustomers = create((set) => ({
               mobil,
             })
           );
-          set({ allCustomers: customers });
+          set({ allCustomers: customers, error: null });
         }
+      } else {
+        throw new Error("Ingen kunder funnet eller ugyldig datastruktur.");
       }
     } catch (error) {
       console.error("Error fetching customers:", error);
+      set({ error: error.message});
     }
   },
 }));

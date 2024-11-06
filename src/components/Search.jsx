@@ -11,6 +11,7 @@ function Search() {
   const saveCustomer = useCustomerStore((state) => state.saveCustomer);
   const savedCustomers = useCustomerStore((state) => state.savedCustomers);
   const [message, setMessage] = useState("");
+  const error = useCustomers((state) => state.error);
 
   useEffect(() => {
     searchTerm.length > 0 && getAllCustomers(searchTerm);
@@ -66,6 +67,11 @@ function Search() {
           {message}
         </div>
       )}
+
+      {error && (
+        <div className="error-message">{error}</div>
+      )}
+
       {searchTerm && (
         <div className="bg-app-secondary mt-5 p-2 rounded-sm">
           <ul 
