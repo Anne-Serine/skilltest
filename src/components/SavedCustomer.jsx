@@ -50,6 +50,8 @@ function SavedCustomer({ customer, openModal }) {
             type="tertiary"
             isActive={openInfo === customer.organisasjonsnummer}
             onClick={() => toggleInfo(customer.organisasjonsnummer)}
+            aria-controls={`info-${customer.organisasjonsnummer}`}
+            aria-expanded={openInfo === customer.organisasjonsnummer}
           />
           <Button
             text="Notat"
@@ -57,6 +59,8 @@ function SavedCustomer({ customer, openModal }) {
             type="tertiary"
             isActive={openNote === customer.organisasjonsnummer}
             onClick={() => toggleNote(customer.organisasjonsnummer)}
+            aria-controls={`note-${customer.organisasjonsnummer}`}
+            aria-expanded={openNote === customer.organisasjonsnummer}
           />
           <Button
             text="Slett"
@@ -70,14 +74,17 @@ function SavedCustomer({ customer, openModal }) {
       </div>
 
       {openNote === customer.organisasjonsnummer && (
-        <div className="bg-gray-50 p-2 border">
+        <div 
+        className="bg-gray-50 p-2 border"
+        id={`note-${customer.organisasjonsnummer}`}
+        >
           <textarea
             value={notes[customer.organisasjonsnummer] || customer.note || ""}
             onChange={(e) =>
               handleNoteChange(customer.organisasjonsnummer, e.target.value)
             }
             placeholder="Her kan du legge til notat"
-            aria-label="add note"
+            aria-label="Legg til notat"
             className="w-full p-2 bg-transparent border"
           />
           <div className="flex gap-4 pt-4">
@@ -95,7 +102,10 @@ function SavedCustomer({ customer, openModal }) {
       )}
 
       {openInfo === customer.organisasjonsnummer && (
-        <div className="bg-gray-50 p-2 border">
+        <div 
+          className="bg-gray-50 p-2 border"
+          id={`info-${customer.organisasjonsnummer}`}
+          >
           <div className="flex flex-col gap-1">
             <div>
               <p className="text-sm">
