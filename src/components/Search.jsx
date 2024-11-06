@@ -11,6 +11,7 @@ function Search() {
   const saveCustomer = useCustomerStore((state) => state.saveCustomer);
   const savedCustomers = useCustomerStore((state) => state.savedCustomers);
   const [message, setMessage] = useState("");
+  const error = useCustomers((state) => state.error);
 
   useEffect(() => {
     searchTerm.length > 0 && getAllCustomers(searchTerm);
@@ -55,7 +56,8 @@ function Search() {
         type="search"
         placeholder="f.eks Appex / 995412020"
         id="searchInput"
-        aria-label="search input"
+        aria-label="Søk på bedriftsnavn eller organisasjonsnummer"
+        aria-controls="searchResults"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none"
@@ -65,14 +67,24 @@ function Search() {
           {message}
         </div>
       )}
+
+      {error && (
+        <div className="error-message">{error}</div>
+      )}
+
       {searchTerm && (
         <div className="bg-app-secondary mt-5 p-2 rounded-sm">
-          <ul className="rounded-sm">
+          <ul 
+            className="rounded-sm"
+            aria-label="Søkeresultater"
+            aria-live="polite"
+            id="searchResults"
+            >
             {filteredCustomers.length ? (
               filteredCustomers.map((customer) => (
                 <li
                   key={customer.organisasjonsnummer}
-                  className="bg-white p-2 border rounded-sm "
+                  className="bg-white p-2 border rounded-sm"
                 >
                   <div className="flex justify-between items-center">
                     <div
@@ -89,7 +101,11 @@ function Search() {
                 </li>
               ))
             ) : (
-              <li className="font-medium">Ingen resultat...</li>
+              <li 
+                className="font-medium"
+                >
+                  Ingen søkeresultater...
+                </li>
             )}
           </ul>
         </div>

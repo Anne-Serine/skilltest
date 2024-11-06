@@ -10,7 +10,7 @@ function App() {
       </div>
       <div className="container gap-5 px-3 grid grid-cols-1 md:grid-cols-5 ">
         <section className="md:sticky md:top-2 py-5 md:col-span-2 md:self-start">
-          <h2 className="pb-3">Legg til ny kunde</h2>
+          <h2 className="pb-3 font-medium">Legg til ny kunde</h2>
           <p className="pb-5">
             Søk etter firmanavn eller organisasjonsnummer, og legg til firmaet i
             kundelisten din for enkel tilgang.
@@ -18,7 +18,7 @@ function App() {
           <Search />
         </section>
         <aside className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
-          <h2 className="pb-3">Min kundeliste</h2>
+          <h2 className="pb-3 font-medium">Min kundeliste</h2>
           <p className="pb-5">
             Her finner du en oversikt over dine lagrede kunder. Du kan legge til
             notater, slette kunder eller få mer informasjon om en kunde ved å
