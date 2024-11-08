@@ -44,7 +44,7 @@ This is a frontend-focused web application that allows users to search for poten
     ```bash
     npm run dev
     ```
-The app should now be running locally on `http://localhost:3000`
+The app should now be running locally on localhost.
 
 ## Project Structure
 
