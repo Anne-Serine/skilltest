@@ -4,11 +4,11 @@ import "./styles/index.css";
 
 function App() {
   return (
-    <div>
-      <div className="bg-app-header p-3">
+    <>
+      <header className="bg-app-header p-3">
         <h1 className="container xl:px-3 text-white">Kunder</h1>
-      </div>
-      <div className="container gap-5 px-3 grid grid-cols-1 md:grid-cols-5 ">
+      </header>
+      <main className="container gap-5 px-3 grid grid-cols-1 md:grid-cols-5 ">
         <section className="md:sticky md:top-2 py-5 md:col-span-2 md:self-start">
           <h2 className="pb-3 font-medium">Legg til ny kunde</h2>
           <p className="pb-5">
@@ -17,7 +17,7 @@ function App() {
           </p>
           <Search />
         </section>
-        <aside className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
+        <section className="bg-app-secondary min-h-[100vh] p-5 md:col-span-3">
           <h2 className="pb-3 font-medium">Min kundeliste</h2>
           <p className="pb-5">
             Her finner du en oversikt over dine lagrede kunder. Du kan legge til
@@ -25,9 +25,9 @@ function App() {
             bruke knappene.
           </p>
           <CustomerList />
-        </aside>
-      </div>
-    </div>
+        </section>
+      </main>
+    </>
   );
 }
 

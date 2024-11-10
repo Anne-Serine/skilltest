@@ -74,9 +74,9 @@ function SavedCustomer({ customer, openModal }) {
       </div>
 
       {openNote === customer.organisasjonsnummer && (
-        <div 
-        className="bg-gray-50 p-2 border"
-        id={`note-${customer.organisasjonsnummer}`}
+        <div
+          className="bg-gray-50 p-2 border"
+          id={`note-${customer.organisasjonsnummer}`}
         >
           <textarea
             value={notes[customer.organisasjonsnummer] || customer.note || ""}
@@ -102,71 +102,71 @@ function SavedCustomer({ customer, openModal }) {
       )}
 
       {openInfo === customer.organisasjonsnummer && (
-        <div 
+        <div
           className="bg-gray-50 p-2 border"
           id={`info-${customer.organisasjonsnummer}`}
-          >
-          <div className="flex flex-col gap-1">
-            <div>
-              <p className="text-sm">
-                <span className="font-semibold">Stiftelsesdato: </span>
-                {customer.stiftelsesdato || "Ikke oppgitt"}
-              </p>
-              {customer.hjemmeside ? (
-                <a
-                  href={`https://${customer.hjemmeside}`}
-                  className="text-sm text-cyan-800"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="font-semibold text-sm text-black">
-                    Hjemmeside:{" "}
-                  </span>
-                  <span>{customer.hjemmeside}</span>
-                </a>
-              ) : (
-                <p className="text-sm">
-                  <span className="font-semibold text-black">Hjemmeside: </span>
-                  Ikke oppgitt
-                </p>
-              )}
-              <p className="text-sm">
-                <span className="font-semibold">Mobil: </span>
-                {customer.mobil || "Ikke oppgitt"}
-              </p>
-              <p className="text-sm">
-                <span className="font-semibold">Email: </span>
-                {customer.epostadresse || "Ikke oppgitt"}
-              </p>
+        >
+          <dl className="flex flex-col gap-1 mb-4">
+            <div className="text-sm flex gap-1">
+              <dt className="font-semibold">Stiftelsesdato: </dt>
+              <dd>{customer.stiftelsesdato || "Ikke oppgitt"}</dd>
+            </div>
+            {customer.hjemmeside ? (
+              <div className="text-sm flex gap-1">
+                <dt className="font-semibold">Hjemmeside:</dt>
+                <dd>
+                  <a
+                    href={`https://${customer.hjemmeside}`}
+                    className="text-sm text-cyan-800"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{customer.hjemmeside}</span>
+                  </a>
+                </dd>
+              </div>
+            ) : (
+              <div className="text-sm flex gap-1">
+                <dt className="font-semibold">Hjemmeside: </dt>
+                <dd>Ikke oppgitt</dd>
+              </div>
+            )}
+            <div className="text-sm flex gap-1">
+              <dt className="font-semibold">Mobil: </dt>
+              <dd>{customer.mobil || "Ikke oppgitt"}</dd>
+            </div>
+            <div className="text-sm flex gap-1">
+              <dt className="font-semibold">Email: </dt>
+              <dd>{customer.epostadresse || "Ikke oppgitt"}</dd>
             </div>
 
             {customer.postadresse ? (
               <div className="text-sm mt-3">
-                <span className="font-semibold flex flex-col">
-                  Postadresse:{" "}
-                </span>
-                <p>{customer.postadresse.adresse || "Ikke oppgitt"}</p>
-                <div className="flex gap-2">
-                  <p>{customer.postadresse.kommunenummer || "Ikke oppgitt"}</p>
-                  <p>{customer.postadresse.kommune || "Ikke oppgitt"}</p>
-                </div>
-                <p>{customer.postadresse.land || "Ikke oppgitt"}</p>
+                <dt className="font-semibold flex flex-col">Postadresse:</dt>
+                <dd>
+                  <p>{customer.postadresse.adresse || "Ikke oppgitt"}</p>
+                  <div className="flex gap-2">
+                    <p>
+                      {customer.postadresse.kommunenummer || "Ikke oppgitt"}
+                    </p>
+                    <p>{customer.postadresse.kommune || "Ikke oppgitt"}</p>
+                  </div>
+                  <p>{customer.postadresse.land || "Ikke oppgitt"}</p>
+                </dd>
               </div>
             ) : (
-              <p className="text-sm mt-3">
-                <span className="font-semibold">Postadresse: </span>
-                Ikke oppgitt
-              </p>
+              <div className="text-sm mt-3">
+                <dt className="font-semibold">Postadresse: </dt>
+                <dd>Ikke oppgitt</dd>
+              </div>
             )}
-          </div>
+          </dl>
 
-          <div className="flex gap-4 pt-4">
-            <Button
-              text="Lukk"
-              type="secondary"
-              onClick={() => toggleInfo(customer.organisasjonsnummer)}
-            />
-          </div>
+          <Button
+            text="Lukk"
+            type="secondary"
+            onClick={() => toggleInfo(customer.organisasjonsnummer)}
+          />
         </div>
       )}
     </>

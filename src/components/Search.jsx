@@ -6,13 +6,14 @@ import { useCustomerStore } from "../hooks/Store";
 function Search() {
   const customers = useCustomers((state) => state.allCustomers);
   const getAllCustomers = useCustomers((state) => state.getAllCustomers);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCustomers, setFilteredCustomers] = useState([]);
   const saveCustomer = useCustomerStore((state) => state.saveCustomer);
   const savedCustomers = useCustomerStore((state) => state.savedCustomers);
-  const [message, setMessage] = useState("");
   const error = useCustomers((state) => state.error);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
+  const [message, setMessage] = useState("");
+  
   useEffect(() => {
     searchTerm.length > 0 && getAllCustomers(searchTerm);
   }, [getAllCustomers, searchTerm]);
@@ -60,7 +61,7 @@ function Search() {
         aria-controls="searchResults"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none"
+        className="bg-white p-2 border w-full border-app-primary rounded-sm text-black outline-none focus:border-app-header"
       />
       {message && (
         <div className="bg-green-50 my-2 text-sm rounded-sm p-2" role="alert">
